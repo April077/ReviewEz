@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Space {
+  id         String   @id @unique @default(uuid())
+  spaceName  String   @unique
+  headerName String
+  image      String
+  msg        String
+  reviews    Review[]
+}
+
+model Review {
+  id       String  @id @default(uuid())
+  name     String
+  email    String
+  rating   Int
+  liked    Boolean @default(false)
+  videoUrl String?
+  text     String?
+  SpaceId  String
+  space    Space   @relation(fields: [SpaceId], references: [id])
+}
