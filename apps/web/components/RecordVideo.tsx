@@ -5,7 +5,7 @@ import { Button } from "./ui/button";
 import Modal from "./ui/Modal";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { toast } from "@/hooks/use-toast";
 import { Star, Video } from "lucide-react";
 import { supabase } from "@/lib/supabaseclient";
@@ -29,7 +29,7 @@ const RecordVideo = ({ id }: { id: string }) => {
 
   const startVideoStream = async () => {
     try {
-      let stream = await navigator.mediaDevices.getUserMedia({
+      const stream = await navigator.mediaDevices.getUserMedia({
         video: true,
         audio: true,
       });

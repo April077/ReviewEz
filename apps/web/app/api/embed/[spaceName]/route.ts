@@ -1,8 +1,13 @@
 import prisma from "@repo/db";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest, { params }: any) {
-  const { spaceName } = params;
+type ParamsType = Promise<{
+  spaceName: string;
+}>
+
+
+export async function GET(req: NextRequest, { params }: { params: ParamsType }) {
+  const { spaceName } = await params;
   console.log(spaceName);
 
   try {
@@ -37,38 +42,33 @@ export async function GET(req: NextRequest, { params }: any) {
             color: #fff; 
             margin: 0; 
             display: flex;
-            flex-direction: column; /* Ensures the video and text are stacked vertically */
-            justify-content: center; /* Centers the content vertically */
+            flex-direction: column; 
+            justify-content: center; 
             align-items: center;
           }
           .container {
             display: grid;
             padding: 10px 50px;
-            grid-template-columns: 1fr; /* Start with one column by default */
-            gap: 20px; /* Spacing between grid items */
+            grid-template-columns: 1fr; 
+            gap: 20px;
           }
-
           @media (min-width: 600px) {
             .container {
-              grid-template-columns: repeat(2, 1fr); /* Switch to 2 columns on medium screens */
+              grid-template-columns: repeat(2, 1fr);
               padding: 20px 100px;
             }
           }
-
           @media (min-width: 1024px) {
             .container {
-              grid-template-columns: repeat(3, 1fr); /* Switch to 3 columns on larger screens */
+              grid-template-columns: repeat(3, 1fr);
               padding: 50px 150px;
             }
           }
-
-
           .review { 
             border-radius: 10px; 
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            overflow: hidden; /* Ensures no elements overflow outside the video wrapper */
+            overflow: hidden;
           }
-
           .video-wrapper {
             position: relative;
             width: 100%;
@@ -81,8 +81,6 @@ export async function GET(req: NextRequest, { params }: any) {
             display: block;
             cursor: pointer;
           }
-          
-          /* Name and stars positioned at the bottom of the video */
           .video-wrapper .video-bottom {
             position: absolute;
             bottom: 0;
@@ -92,56 +90,48 @@ export async function GET(req: NextRequest, { params }: any) {
             justify-content: space-between;
             align-items: center;
             padding: 10px;
-            background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-            z-index: 2; /* Ensure it's above the video */
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2;
           }
-          
           .video-wrapper .video-bottom h2, .video-wrapper .video-bottom .rating {
             margin: 0;
             font-size: 1em;
             color: #f5f5f5;
           }
-
           .rating {
             display: flex;
             gap: 3px;
           }
-          
           .star {
             fill: #FFB621;
-            transition: fill .2s ease-in-out;
             width: 24px;
             height: 24px;
           }
-
           .video-wrapper .play-button {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 70px; /* Increase width */
-  height: 70px; /* Increase height */
-  background: rgba(102, 0, 255, 0.8); /* Semi-transparent purple-blue */
-  border-radius: 50%; /* Fully round edges */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  z-index: 1;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Add a subtle shadow for emphasis */
-}
-
-.video-wrapper .play-button::before {
-  content: '';
-  display: block;
-  border-radius: 10%;
-  width: 0;
-  height: 0;
-  border-left: 30px solid #fff; /* Larger play icon */
-  border-top: 15px solid transparent;
-  border-bottom: 15px solid transparent;
-}
-
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70px;
+            height: 70px;
+            background: rgba(102, 0, 255, 0.8);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 1;
+          }
+          .video-wrapper .play-button::before {
+            content: '';
+            display: block;
+            border-radius: 10%;
+            width: 0;
+            height: 0;
+            border-left: 30px solid #fff;
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+          }
         </style>
       </head>
       <body>
@@ -164,38 +154,35 @@ export async function GET(req: NextRequest, { params }: any) {
                     `
                       )
                       .join("")}
-                  </div>            
+                  </div>
                 </div>
                 <div class="play-button" onclick="togglePlay('video-${review.id}', this)"></div>
               </div>
               ${review.text ? `<p>${review.text}</p>` : ""}
             </div>
-          `
-            )
+          `)
             .join("")}
         </div>
-       <script>
-  function togglePlay(videoId, playButton) {
-    const video = document.getElementById(videoId);
-    if (video.paused) {
-      video.play();
-      playButton.style.display = "none"; // Hide play button when video starts
-    } else {
-      video.pause();
-      playButton.style.display = "flex"; // Show play button when video pauses
-    }
-  }
+        <script>
+          function togglePlay(videoId, playButton) {
+            const video = document.getElementById(videoId);
+            if (video.paused) {
+              video.play();
+              playButton.style.display = "none";
+            } else {
+              video.pause();
+              playButton.style.display = "flex";
+            }
+          }
 
-  // Event listener to show the play button again when the video ends
-  const videos = document.querySelectorAll('video');
-  videos.forEach((video) => {
-    video.addEventListener('ended', function () {
-      const playButton = video.closest('.video-wrapper').querySelector('.play-button');
-      playButton.style.display = 'flex'; // Show play button after the video ends
-    });
-  });
-</script>
-
+          const videos = document.querySelectorAll('video');
+          videos.forEach((video) => {
+            video.addEventListener('ended', function () {
+              const playButton = video.closest('.video-wrapper').querySelector('.play-button');
+              playButton.style.display = 'flex';
+            });
+          });
+        </script>
       </body>
       </html>
     `;
@@ -203,8 +190,8 @@ export async function GET(req: NextRequest, { params }: any) {
     return new Response(htmlContent, {
       headers: { "Content-Type": "text/html" },
     });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error(error);
-    return NextResponse.json({ message: "server error" }, { status: 500 });
+    return NextResponse.json({ message: error }, { status: 500 });
   }
 }

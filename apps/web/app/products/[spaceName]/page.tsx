@@ -165,7 +165,7 @@ const TestPages = () => {
               filteredReviews.map((review) => (
                 <div
                   key={review.id}
-                  className="bg-zinc-900 w-full p-4 rounded-lg shadow-md"
+                  className=" w-full p-4 rounded-lg shadow-md"
                 >
                   {review.videoUrl && (
                     <video
@@ -175,7 +175,7 @@ const TestPages = () => {
                       preload="auto"
                     />
                   )}
-                  <div className="font-semibold pt-4 text-lg">
+                  <div className="font-semibold  text-lg">
                     {review.name}
                   </div>
                   <div className="font-thin text-sm">{review.email}</div>

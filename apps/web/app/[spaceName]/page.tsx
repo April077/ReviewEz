@@ -6,13 +6,13 @@ import { Pencil } from "lucide-react";
 import { notFound } from "next/navigation";
 import { Spotlight } from "@/components/ui/Spotlight";
 
-type PageProps = {
-  params: {
+type Props = {
+  params: Promise<{
     spaceName: string;
-  };
+  }>;
 };
 
-const TestPages = async ({ params }: PageProps) => {
+const TestPages = async ({ params }: Props) => {
   const { spaceName } = await params;
 
   if (!spaceName) {

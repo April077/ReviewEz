@@ -1,6 +1,8 @@
 import prisma from "@repo/db";
 import { NextResponse } from "next/server";
 
+
+
 export async function GET() {
   try {
     console.log("first")
@@ -10,6 +12,6 @@ export async function GET() {
       return NextResponse.json(spaces);
     }
   } catch (error) {
-    return NextResponse.json({ message: "Server Error" });
+    return NextResponse.json({ message: error }, { status: 500 });
   }
 }

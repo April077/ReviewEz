@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(updatedReview);
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to update review." },
+      { error },
       { status: 500 }
     );
   }

@@ -16,12 +16,11 @@ import { Textarea } from "./ui/textarea";
 import { Pencil, Video } from "lucide-react";
 import axios from "axios";
 import { SpaceSchema } from "@/zod/spaceSchema";
-import { ZodError, ZodIssue } from "zod";
+import { ZodError } from "zod";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import Confetti from "react-confetti";
 
-type ErrorType = Partial<ZodIssue> & { message: string };
 type PopupProps = {
   onSpaceCreated: () => void;
 };
@@ -29,7 +28,6 @@ type PopupProps = {
 const Popup: React.FC<PopupProps> = ({ onSpaceCreated }) => {
   const [isMounted, setIsMounted] = useState(false);
   const [isLoading, setLoading] = useState(false);
-  const [err, setErr] = useState<ErrorType[]>([]); // Array of error objects
   const [image, setImgSrc] = useState<string | null>(null);
   const [spaceName, setSpaceName] = useState<string>("");
   const [headerName, setHeader] = useState<string>("Header goes here...");
@@ -78,7 +76,6 @@ const Popup: React.FC<PopupProps> = ({ onSpaceCreated }) => {
       }
     } catch (error: unknown) {
       if (error instanceof ZodError) {
-        setErr(error.errors);
         toast({
           variant: "destructive",
           title: "You missed some details.",
@@ -86,7 +83,12 @@ const Popup: React.FC<PopupProps> = ({ onSpaceCreated }) => {
           action: <ToastAction altText="Try again">Try again</ToastAction>,
         });
       } else {
-        setErr([{ message: "Server Error: " + (error as Error).message }]); // Fallback for generic errors
+        toast({
+          variant: "destructive",
+          title: "Server Error",
+          description: "Something went wrong.",
+          action: <ToastAction altText="Try again">Try again</ToastAction>,
+        });
       }
     } finally {
       setLoading(false);
@@ -111,7 +113,7 @@ const Popup: React.FC<PopupProps> = ({ onSpaceCreated }) => {
           </Button>
         </DialogTrigger>
         <DialogContent className="dialogContent text-black">
-          {confetti  && (
+          {confetti && (
             <Confetti className="h-full w-full" width={1000} height={1000} />
           )}
           <div className="border-gray-400 flex border-[1px] space-y-4 h-screen flex-col items-center rounded-lg py-16 px-4 w-1/2">

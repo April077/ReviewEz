@@ -1,5 +1,3 @@
-"use client";
-import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
@@ -22,12 +20,12 @@ const MySpace = ({ spaces }: { spaces: SpaceType[] }) => {
   };
 
   return (
-    <div className=" grid grid-cols-3 gap-4 ">
+    <div className="grid grid-cols-3 gap-4">
       {spaces.length > 0 &&
         spaces.map((space, index) => {
           return (
             <div key={index} className="mt-4">
-              <div className="max-w-sm  text-white p-6 bg-zinc-900 rounded-lg shadow-md ">
+              <div className="max-w-sm text-white p-6 bg-zinc-900 rounded-lg shadow-md">
                 <div className="flex cursor-pointer items-center justify-between space-x-4">
                   <div
                     onClick={() => [
@@ -50,11 +48,11 @@ const MySpace = ({ spaces }: { spaces: SpaceType[] }) => {
                         No Image Available
                       </div>
                     )}
-                    <h2 className="text-xl font-bold ">{space.spaceName}</h2>
+                    <h2 className="text-xl font-bold">{space.spaceName}</h2>
                   </div>
                   <div
                     onClick={() => copyLink(space.spaceName)}
-                    className="flex justify-center cursor-pointer items-center p-2 bg-black  text-zinc-400 rounded-lg border border-transparent hover:border-gray-600"
+                    className="flex justify-center cursor-pointer items-center p-2 bg-black text-zinc-400 rounded-lg border border-transparent hover:border-gray-600"
                   >
                     <Copy />
                   </div>
@@ -62,13 +60,13 @@ const MySpace = ({ spaces }: { spaces: SpaceType[] }) => {
               </div>
             </div>
           );
-        })}{" "}
+        })}
       {spaces.length === 0 && (
         <div className="pt-8 grid grid-cols-3 w-screen">
           {(() => {
-            const loaders = [];
+            const loaders: React.ReactNode[] = [];  // Explicitly type the array here
             for (let i = 0; i < 5; i++) {
-              loaders.push(<Loader key={i} />);
+              loaders.push(<Loader key={i} />);  // Add loader components to the array
             }
             return loaders;
           })()}
