@@ -59,7 +59,7 @@ const Popup: React.FC<PopupProps> = ({ onSpaceCreated }) => {
         msg,
       });
 
-      const res = await axios.post("/api/createSpace", data);
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_HOST_URL}/api/createSpace`, data);
 
       if (res.status === 201) {
         toast({
