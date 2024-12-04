@@ -56,7 +56,7 @@ const TestPages = () => {
         setLikedReviews(initialLikes);
 
         // Generate embed code
-        const embedUrl = `${process.env.NEXT_PUBLIC_HOST_URL}/api/embed/${spaceName}`;
+        const embedUrl = `api/embed/${spaceName}`;
         const embedScript = `
           <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/iframe-resizer/js/iframeResizer.min.js" ></script>
           <iframe id='embed' src="${embedUrl}" frameborder="0" scrolling="no" width="100%"></iframe>

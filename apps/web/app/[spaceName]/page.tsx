@@ -22,7 +22,7 @@ const TestPages = async ({ params }: Props) => {
 
   // Fetch data from the API
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_HOST_URL}/api/spaces/${spaceName}`,
+    `api/spaces/${spaceName}`,
     {
       cache: "no-store",
     }
