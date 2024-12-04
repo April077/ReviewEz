@@ -5,6 +5,7 @@ import { ZodError } from "zod";
 
 export async function POST(req: NextRequest) {
   try {
+    console.log("first")
     const body = await req.json();
     const data = SpaceSchema.parse(body);
     if (data) {
