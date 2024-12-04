@@ -37,7 +37,7 @@ const TestPages = () => {
 
       try {
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_HOST_URL}/api/getReviews/${spaceName}`,
+          `api/getReviews/${spaceName}`,
           {
             headers: {
               "Cache-Control": "no-store",
@@ -106,7 +106,7 @@ const TestPages = () => {
     try {
       // Update like status in the DB
       await axios.post(
-        `${process.env.NEXT_PUBLIC_HOST_URL}/api/updateLikeStatus`,
+        `api/updateLikeStatus`,
         {
           reviewId,
           liked: !isLiked, // Toggle the like status

@@ -11,7 +11,7 @@ const Page = () => {
 
   async function fetchSpaces() {
     try {
-      const res = await axios.get("/api/getSpace");
+      const res = await axios.get(`api/getSpace`);
       console.log(res.data);
       setSpace(res.data);
     } catch (error) {

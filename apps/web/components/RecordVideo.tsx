@@ -127,7 +127,7 @@ const RecordVideo = ({ id }: { id: string }) => {
       console.log(reviewerEmail);
 
       const checkResponse = await axios.post(
-        `${process.env.NEXT_PUBLIC_HOST_URL}/api/checkReviewer`,
+        `api/checkReviewer`,
         {
           email: reviewerEmail,
           SpaceId: id,
@@ -180,7 +180,7 @@ const RecordVideo = ({ id }: { id: string }) => {
       console.log(url.data.publicUrl);
 
       const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_HOST_URL}/api/createReview`,
+        `api/createReview`,
         {
           rating,
           name: reviewerName,
